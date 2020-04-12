@@ -42,46 +42,77 @@ App = {
   //it will call create token button on clicking create button
   bindEvents: function() {
     $(document).on('click', '#transferButton', App.handleTransfer);
-    $(document).on('click', '#createButton', App.createToken);
+    $(document).on('click', '#rock', App.userRock);
+    $(document).on('click', '#paper', App.userPaper);
+    $(document).on('click', '#scissors', App.userScissors);
   },
 
-  //it will create ERC721 tokens
-  createToken: function(event) {
-    //prevent user for default actions for selected elements
+  userRock: function(event) {
     event.preventDefault();
+    var name = $('#userName').val();
 
-    //it will take values of the HTML input divs and assign to different variables
-    var tokenid = parseInt($('#CTid').val());
-    var symbol = $('#CTsymbol').val();
-    var name = $('#CTname').val();
-
-    //simple console.log to print on console
-    console.log("creating token " + name +" " + symbol + " with token id " + tokenid);
-
-    //it will create the instance of our contract
+    console.log(name + " is playing Rock paper Scissors");
     var createTokensInstance;
-
-    //it will get array of account from our web3 rth provider 
-    // and then assign account to our first account from which it is called
     App.web3js.eth.getAccounts(function(error, accounts) {
       if (error) {
         console.log(error);
       }
       var account = accounts[0];
-
-      //it is a promise will will assign the contract to our createToken instance
       App.contracts.createTokens.deployed().then(function(instance) {
         createTokensInstance = instance;
-        //it will call _createToken function from our contract
-        //and the value will be returned to .then function 
-        return createTokensInstance._createToken(tokenid, name, symbol, {from: account, gas: 600000});
+        return createTokensInstance.rock(name);
       }).then(function(result) {
-        //after returning value it will implement getBalances and getTokens
-        alert('Token created Successfully!');
+        alert("Thankyou For playing Rock-Paper-Scissors");
         App.getBalances();
         App.getTokens();
-      
-      //catch function will run when there is an error, otherwise not 
+      }).catch(function(err) {
+        console.log(err.message);
+      });
+    });
+  },
+
+  userPaper: function(event) {
+    event.preventDefault();
+    var name = $('#userName').val();
+
+    console.log(name + " is playing Rock paper Scissors");
+    var createTokensInstance;
+    App.web3js.eth.getAccounts(function(error, accounts) {
+      if (error) {
+        console.log(error);
+      }
+      var account = accounts[0];
+      App.contracts.createTokens.deployed().then(function(instance) {
+        createTokensInstance = instance;
+        return createTokensInstance.paper(name);
+      }).then(function(result) {
+        alert("Thankyou For playing Rock-Paper-Scissors");
+        App.getBalances();
+        App.getTokens();
+      }).catch(function(err) {
+        console.log(err.message);
+      });
+    });
+  },
+
+  userScissors: function(event) {
+    event.preventDefault();
+    var name = $('#userName').val();
+
+    console.log(name + " is playing Rock paper Scissors");
+    var createTokensInstance;
+    App.web3js.eth.getAccounts(function(error, accounts) {
+      if (error) {
+        console.log(error);
+      }
+      var account = accounts[0];
+      App.contracts.createTokens.deployed().then(function(instance) {
+        createTokensInstance = instance;
+        return createTokensInstance.scissors(name);
+      }).then(function(result) {
+        alert("Thankyou For playing Rock-Paper-Scissors");
+        App.getBalances();
+        App.getTokens();
       }).catch(function(err) {
         console.log(err.message);
       });
@@ -163,22 +194,19 @@ App = {
         return keys
       }).then(function(data) {
         //the array of token ids is present in data
-        console.log(data);
 
         //this loop is for each token id in the data 
         for (i=0; i<data.length; i++){
           //now call the tokensbyId function from our contract with particular token id
-          createTokensInstance.tokensbyId(data[i].c[0])
+          createTokensInstance.tokensbyId(data[i].toNumber())
             .then(function(result){
 
               var tokenrow = $('#all-tokens');
               var tokenTemplate = $('#template');
-              
+
               //next 4 lines will find the particular div and add the particular data
-              tokenTemplate.find('.TTId').text(result[2]);
-              tokenTemplate.find('.TTName').text(result[0]);
-              tokenTemplate.find('.TTSymbol').text(result[1]);
-              tokenTemplate.find('.TTOwner').text(result[3]);
+              tokenTemplate.find('.TTId').text(result[0]);
+              tokenTemplate.find('.TTOwner').text(result[1]);
 
               //it will append the template div in tokenrow div
               tokenrow.append(tokenTemplate.html());

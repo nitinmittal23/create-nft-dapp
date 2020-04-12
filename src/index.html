@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Create ERC721-Tokens</title>
+    <title>Rock Paper Scissors</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -21,24 +21,28 @@
     <div class="container">
       <div class="row">
         <div class="col-xs-12 col-sm-8 col-sm-push-2">
-          <h1 class="text-center">Token Creation</h1>
+          <h1 class="text-center">Rock Paper Scissors</h1>
           <hr/>
           <br/>
         </div>
       </div>
 
-        <div class="col-sm-6 col-sm-push-3 col-md-3 col-md-push-0">
+        <div class="col-sm-6 col-sm-push-3 col-md-8 col-md-push-0">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">Create</h3>
+              <h3 class="panel-title text-center" >Play Game</h3>
             </div>
-            <div class="panel-body">
+            <div class="panel-body text-center">
               
-              <h4>Token</h4>
-              <input type="text" class="form-control" id="CTname" placeholder="name" />
-              <input type="text" class="form-control" id="CTsymbol" placeholder="Symbol" />
-              <input type="text" class="form-control" id="CTid" placeholder="TokenId" />
-              <button class="btn btn-primary" id="createButton" type="button">create</button>
+              <h4>You Choose</h4>
+              <input type="text" class="form-control" id="userName" placeholder="Name" /><br>
+              <img class="text-center" src="./images.jpeg">
+              
+            </div>
+            <div class="panel-body text-center">
+              <button class="btn btn-primary"  id="rock" type="button">Rock</button>
+              <button class="btn btn-primary" id="paper" type="button">Paper</button>
+              <button class="btn btn-primary" id="scissors" type="button">Scissors</button>
             </div>
           </div>
       </div>
@@ -51,39 +55,39 @@
             <div class="panel-body">
               <h4>Balance</h4>
               <strong>Balance</strong>: <span id="TTBalance"></span><br/><br/>
-              
               <h4>Transfer</h4>
               <input type="text" class="form-control" id="TTTransferAddress" placeholder="Address" />
               <input type="text" class="form-control" id="TTTransferId" placeholder="tokenId" />
+            </div>
+            <div class="panel-body text-center">
               <button class="btn btn-primary" id="transferButton" type="button">Transfer</button>
             </div>
           </div>
       </div>
 
-      <div class="col-sm-6 col-sm-push-3 col-md-6 col-md-push-0">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">All Tokens</h3>
-            </div>
-            <div class="panel-body">
-              <ul id="all-tokens">
-                
-              </ul>
-              
-              <li id="template" style="display: none;">
-              
-                  <strong>TokenId</strong>: <span class="TTId" id="TTId"></span><br/>
-                  <strong>Name</strong>: <span class="TTName" id="TTName"></span><br/>
-                  <strong>Symbol</strong>: <span class="TTSymbol" id="TTSymbol"></span><br/>
-                  <strong>Owner</strong>: <span class="TTOwner" id="TTOwner"></span><br/><br/>
-            
-              </li>
-              
+      
 
-            </div>
+    </div>
+    <div class="container">
+      <div class="col-sm-6 col-sm-push-3 col-md-8 col-md-push-0">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">All Tokens</h3>
           </div>
-      </div>
-
+          <div class="panel-body">
+          
+            <ul id="all-tokens">
+              
+            </ul>
+            
+            <li id="template" style="display: none;">
+                <strong>TokenId</strong>: <span class="TTId" id="TTId"></span><br/>
+                <strong>Owner</strong>: <span class="TTOwner" id="TTOwner"></span><br/><br/> 
+            </li>
+          
+          </div>
+        </div>
+    </div>
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
