@@ -39,7 +39,9 @@ App = {
 
   //bind events are used to attach one or more event handlers
   //it will call handletransfer function on clicking transfer button
-  //it will call create token button on clicking create button
+  //it will call userRock function on clicking rock button
+  //it will call userPaper function on clicking paper button
+  //it will call userScissors function on clicking scissors button
   bindEvents: function() {
     $(document).on('click', '#transferButton', App.handleTransfer);
     $(document).on('click', '#rock', App.userRock);
@@ -47,21 +49,33 @@ App = {
     $(document).on('click', '#scissors', App.userScissors);
   },
 
+  //this is the userrock function called when user chooses rock
   userRock: function(event) {
+    //it will prevent the default value of selected elements
     event.preventDefault();
+
+    //it will take user name as input
     var name = $('#userName').val();
 
+    //simple console.log function
     console.log(name + " is playing Rock paper Scissors");
+
+
     var createTokensInstance;
     App.web3js.eth.getAccounts(function(error, accounts) {
       if (error) {
         console.log(error);
       }
+      //it will get the account from which the functions are send
       var account = accounts[0];
+
       App.contracts.createTokens.deployed().then(function(instance) {
         createTokensInstance = instance;
+        //it will call rock function from our token and return the value
         return createTokensInstance.rock(name);
       }).then(function(result) {
+        //it will give an alert after he win or loose 
+        //get balances and get tokens functions will be called to update the values
         alert("Thankyou For playing Rock-Paper-Scissors");
         App.getBalances();
         App.getTokens();
@@ -71,6 +85,7 @@ App = {
     });
   },
 
+  //this function will be called when user chooses paper
   userPaper: function(event) {
     event.preventDefault();
     var name = $('#userName').val();
@@ -95,6 +110,7 @@ App = {
     });
   },
 
+  //this function will be called when user chooses scissors
   userScissors: function(event) {
     event.preventDefault();
     var name = $('#userName').val();
@@ -201,6 +217,7 @@ App = {
           createTokensInstance.tokensbyId(data[i].toNumber())
             .then(function(result){
 
+              //it will find the div in out HTML file whose ids are all-token and template
               var tokenrow = $('#all-tokens');
               var tokenTemplate = $('#template');
 
